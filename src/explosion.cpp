@@ -44,14 +44,17 @@ public:
   void draw() {
     renderer.beginShader("billboard-animated");
     renderer.texture("image", "explosion");
-
-    // 30 fps => each frame 1/30 long, e.g. when time = 1s, we play frame 30
-    frame = 0;
+    frame=int(fbuff+(elapsedTime()*30));
+    frows=frame % (nrows*ncols);
+    fcols=int(frame/ncols);
+    renderer.setUniform("fr",frows);
+    renderer.setUniform("fc",fcols);
+    frame=0;
     renderer.setUniform("Frame", frame);
-    renderer.setUniform("Rows", numRows);
-    renderer.setUniform("Cols", numCols);
+    renderer.setUniform("Rows", nrows);
+    renderer.setUniform("Cols", ncols);
 
-    float aspect = ((float)width()) / height();
+    float aspect=((float)width())/height();
     renderer.perspective(glm::radians(60.0f), aspect, 0.1f, 50.0f);
 
     renderer.lookAt(eyePos, lookPos, up);
@@ -62,12 +65,14 @@ public:
 
 protected:
 
-  vec3 eyePos = vec3(0, 0, 2);
-  vec3 lookPos = vec3(0, 0, 0);
-  vec3 up = vec3(0, 1, 0);
-  int frame = 0;
-  int numRows = 8;
-  int numCols = 8;
+  vec3 eyePos=vec3(0, 0, 2);
+  vec3 lookPos=vec3(0, 0, 0);
+  vec3 up=vec3(0, 1, 0);
+  int frame=0;
+  int fbuff=0;
+  int frows,fcols;
+  int nrows=8;
+  int ncols=8;
 };
 
 int main(int argc, char** argv)

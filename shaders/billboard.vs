@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec3 vPosition;
 
+uniform float r;
 uniform vec3 CameraPos;
 uniform float Size;
 uniform float Rot;

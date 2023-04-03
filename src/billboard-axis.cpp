@@ -24,23 +24,51 @@ public:
     Image img;
     img.load("../textures/tree.png", true);
     renderer.loadTexture("tree", img, 0);
-    // TODO: Use the width and the height of the image to scale the billboard
-
+    int h = img.height();
+    int w = img.width();
+    hw=(float)h/(float)w;
     renderer.loadTexture("grass", "../textures/grass.png", 0);
     renderer.blendMode(agl::BLEND);
   }
 
 
   void mouseMotion(int x, int y, int dx, int dy) {
-  }
+    if(clk){
+          vp=vp-(dy*0.05);
+          az=az-(dx*0.05);
+          if (vp>6.28){
+            vp=0;
+          }
+          else if(vp<0){
+            vp=6.28;
+          }
+          if (az<-3.14){
+            az=.14;
+          }
+          else if(az>3.14){
+            az=-3.14;
+          }
+          float x=rad*sin(az)*cos(vp);
+          float y=rad*sin(vp);
+          float z=rad*cos(az)*cos(vp);
+          eyePos=vec3(x,y,z);
+        }
+    }
 
   void mouseDown(int button, int mods) {
+    clk=true;
   }
 
   void mouseUp(int button, int mods) {
+    clk=false;
   }
 
   void scroll(float dx, float dy) {
+    rad=rad+dy;
+    float x=rad*sin(az)*cos(vp);
+    float y=rad*sin(vp);
+    float z=rad*cos(az)*cos(vp);
+    eyePos=vec3(x,y,z);
   }
 
   void draw() {
@@ -61,6 +89,8 @@ public:
     // draw tree
     renderer.texture("Image", "tree");
     renderer.push();
+    view=normalize(eyePos-lookPos);
+    renderer.rotate(atan2(view.x,view.z),vec3(0.0,1.0,0.0));
     renderer.translate(vec3(-0.5, -0.5, 0));
     renderer.quad(); // vertices span from (0,0,0) to (1,1,0)
     renderer.pop();
@@ -69,10 +99,15 @@ public:
   }
 
 protected:
-
+  float hw;
+  bool clk=false;
+  float rad=5;
+  float vp=0;
+  float az=0;
   vec3 eyePos = vec3(0, 0, 2);
   vec3 lookPos = vec3(0, 0, 0);
   vec3 up = vec3(0, 1, 0);
+  vec3 view;
 };
 
 int main(int argc, char** argv)
