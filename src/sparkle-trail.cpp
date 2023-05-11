@@ -36,10 +36,10 @@ public:
         for (int i=0; i < size; i++) {
             Particle particle;
             particle.color=vec4(agl::randomUnitCube(),0.7);
-            particle.size=0.25;
+            particle.size=0.2;
             particle.rot=0 ;
             particle.pos=position;
-            particle.vel=vec3(position.y,-position.x,0)+gl::randomUnitCube();
+            particle.vel=vec3(position.y,-position.x,0)+agl::randomUnitCube();
             particle.ttl=glfwGetTime();
             mParticles.push_back(particle);
         }
@@ -58,7 +58,7 @@ public:
                 p.color.a=0.70;
                 p.pos=position;
                 p.ttl=glfwGetTime();
-                p.rot=0;
+                p.rot=1;
                 p.size=(0.25);
                 p.vel=vec3(position.y,-position.x,0)+agl::randomUnitCube();
             }

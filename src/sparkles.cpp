@@ -17,6 +17,7 @@ struct Particle {
   float size;
   float rot;
   float startTime;
+  float ttl;//time to live
 };
 
 class Viewer : public Window {

@@ -22,7 +22,7 @@ public:
       "../shaders/simple-texture.fs");
 
     Image img;
-    img.load("../textures/tree.png", true);
+    img.load("../textures/brolysprite.png", true);
     renderer.loadTexture("tree", img, 0);
     int h = img.height();
     int w = img.width();
@@ -78,13 +78,13 @@ public:
     renderer.perspective(glm::radians(60.0f), aspect, 0.1f, 50.0f);
     renderer.lookAt(eyePos, lookPos, up);
 
-    // draw plane
+    /*/ draw plane
     renderer.texture("Image", "grass");
     renderer.push();
     renderer.translate(vec3(0.0, -0.5, 0));
     renderer.scale(vec3(2.0f));
     renderer.plane();
-    renderer.pop();
+    renderer.pop();*/
 
     // draw tree
     renderer.texture("Image", "tree");
