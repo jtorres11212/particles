@@ -40,9 +40,9 @@ public:
     lookPos.x += 0.1f;
     lookPos.y-=0.1f;
     eyePos.y-=0.1f;
-    shot.pos = vec3(0.0,0.0,0.3);
-    shot.vel = vec3(-0.03, 0, 0.0);
-    shot.color = vec4(1.0, 1.0, 1.0, 1.0);
+    shot.pos=vec3(0.0,0.0,0.3);
+    shot.vel=vec3(-0.03, 0, 0.0);
+    shot.color=vec4(1.0, 1.0, 1.0, 1.0);
     shot.size=0.25f;
 
 
@@ -66,19 +66,19 @@ public:
     vz+=forcez;
 }
   void createConfetti(int size){
-    for (int i=0; i < size; i++){
+    for (int i=0;i<size;i++){
       Particle particle;
-      particle.color = vec4(0.47f,0.87f,0.47f, 1);
-      particle.size = 0.25;
-      particle.rot = 1;
-      particle.pos = agl::randomUnitSphere();
+      particle.color=vec4(0.47f,0.87f,0.47f, 1);
+      particle.size=0.25;
+      particle.rot=1;
+      particle.pos=agl::randomUnitSphere();
       updatevel(particle.pos.x, particle.pos.y, particle.pos.z);
-      particle.vel = vec3(vx, vy, vz);
-      particle.pos = particle.vel* 2.0f;
-      particle.vel = vec3(-0.33,-0.13,0) - particle.pos; // 0,0,0
-      if (particle.pos.x==0 && particle.pos.y==0 && particle.pos.z==0){
-        particle.vel = vec3(0.0f, 0.0f, 0.0f);
-        particle.color = vec4(0.1f,0.8f,0.9f,1);
+      particle.vel=vec3(vx, vy, vz);
+      particle.pos=particle.vel* 2.0f;
+      particle.vel=vec3(-0.33,-0.13,0)-particle.pos;// 0,0,0
+      if (particle.pos.x==0&&particle.pos.y==0&&particle.pos.z==0){
+        particle.vel=vec3(0.0f, 0.0f, 0.0f);
+        particle.color=vec4(0.1f,0.8f,0.9f,1);
       }
       
       vx=0;
@@ -90,10 +90,10 @@ public:
 
   void updateConfetti(float dt)
   {
-    for (int i=0; i < mParticles.size(); i++)
+    for (int i=0;i<mParticles.size();i++)
     {
       Particle particle=mParticles[i];
-       if(particle.pos.x < 0.4 && particle.pos.x > -0.4 && particle.pos.y < 0.4 && particle.pos.y > -0.4){ //&& particle.pos.z < 0.1 && particle.pos.z > -0.1
+       if(particle.pos.x<0.4&&particle.pos.x>-0.4&&particle.pos.y<0.4&&particle.pos.y>-0.4){ //&& particle.pos.z<0.1&&particle.pos.z>-0.1
         printf("disappeared\n");
          mParticles.erase(mParticles.begin() + i);
          i--;
@@ -102,15 +102,13 @@ public:
         particle.pos += particle.vel*dt*vec3(.5,.5,.5);
         mParticles[i]=particle;
       }
-      if(mParticles.size() < 50){
-      printf("here\n");
-      collected = true;
+      if(mParticles.size()<50){
+      collected=true;
     }
     if(collected){
       shot.pos += shot.vel;
-    if(particle.pos.x < 0.1 && particle.pos.z > -0.1 && particle.pos.y < 0.1 && particle.pos.y > -0.1
-      && particle.pos.z < 0.1 && particle.pos.z > -0.1){
-        //shot.color.a +=0.01;
+    if(particle.pos.x<0.1&&particle.pos.z>-0.1&&particle.pos.y<0.1&&particle.pos.y>-0.1
+     &&particle.pos.z<0.1&&particle.pos.z>-0.1){
     }
   }
   }
@@ -125,16 +123,16 @@ public:
     vec3 cameraPos=renderer.cameraPosition();
 
     // sort
-    for (int i=1; i < mParticles.size(); i++)
+    for (int i=1;i<mParticles.size();i++)
     {
       Particle particle1=mParticles[i];
-      Particle particle2=mParticles[i - 1];
-      float dSqr1=length2(particle1.pos - cameraPos);
-      float dSqr2=length2(particle2.pos - cameraPos);
-      if (dSqr2 < dSqr1)
+      Particle particle2=mParticles[i-1];
+      float dSqr1=length2(particle1.pos-cameraPos);
+      float dSqr2=length2(particle2.pos-cameraPos);
+      if (dSqr2<dSqr1)
       {
         mParticles[i]=particle2;
-        mParticles[i - 1]=particle1;
+        mParticles[i-1]=particle1;
       }
     }
     if(collected){
@@ -147,15 +145,15 @@ public:
 
     // draw
     renderer.texture("image", "particle");
-    for (int i=0; i < mParticles.size(); i++)
+    for (int i=0;i<mParticles.size();i++)
     {
-      float c = 0.25;
+      float c=0.25;
       Particle particle=mParticles[i];
-      renderer.sprite(particle.pos*c, particle.color, particle.size, particle.rot); //vec4(0.62f,0.27f,0.69f,1)
-      //renderer.sprite(-particle.pos*c,particle.color, .1f, .2f); // 1 1 1 1
-      //renderer.sprite((particle.pos-vec3(0.5,0.5,0.5)*c), particle.color, 1, 1); //vec4(0.26f,0.02f,0.43f,1)
-      //renderer.sprite((particle.pos-vec3(.25,0.75,.25)*c), particle.color, .2f, 1); //vec4(0.26f,0.0f,0.54f,1)
-      //renderer.sprite((particle.pos-vec3(.1,0.6,0.6)*c), particle.color, .2f, 1); //vec4(1,0.89f,0.94f,1)
+      renderer.sprite(particle.pos*c, particle.color, particle.size, particle.rot);//vec4(0.62f,0.27f,0.69f,1)
+      //renderer.sprite(-particle.pos*c,particle.color, .1f, .2f);// 1 1 1 1
+      //renderer.sprite((particle.pos-vec3(0.5,0.5,0.5)*c), particle.color, 1, 1);//vec4(0.26f,0.02f,0.43f,1)
+      //renderer.sprite((particle.pos-vec3(.25,0.75,.25)*c), particle.color, .2f, 1);//vec4(0.26f,0.0f,0.54f,1)
+      //renderer.sprite((particle.pos-vec3(.1,0.6,0.6)*c), particle.color, .2f, 1);//vec4(1,0.89f,0.94f,1)
     }
   }
 
@@ -175,7 +173,7 @@ public:
   void draw() {
 
     // 30 fps => each frame 1/30 long,e.g. when time=1s,we play frame 30
-    if(frame < 64){
+    if(frame<64){
       frame=elapsedTime() * fps;
     }else{
       renderer.beginShader("sprite");
@@ -184,7 +182,7 @@ public:
       renderer.endShader();
     }
     int _frames=int(frame) % 64;
-    _frames = 64 - _frames;
+    _frames=64-_frames;
     int _row= _frames / numCols;
     int _col= _frames % numCols;
 
@@ -218,7 +216,7 @@ protected:
   vec3 lookPos=vec3(0,0,0);
   vec3 up=vec3(0,1,0);
   float vx,vy,vz;
-  bool collected = false;
+  bool collected=false;
   Particle shot;
   int frame=0;
   int numRows=4;
